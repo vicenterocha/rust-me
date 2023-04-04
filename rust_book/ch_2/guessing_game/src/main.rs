@@ -1,16 +1,37 @@
 use std::io;
+use rand::Rng;  // Rng is a trait that defines methods that random number generators implement
+use std::cmp::Ordering;
 
 fn main() {
     println!("Guess the number!");
-    println!("Please input your guess.");
+    // `thread_rng` gives a random number generator local to the current
+    // thread of execution and seeded by the operating system
+    // `gen_range` is defined by the Rng trait and generates a random number
+    let secret_number = rand::thread_rng().gen_range(1..=100);
+    println!("The secret number is: {secret_number}");
 
-    let mut guess = String::new();
+	loop {
+		println!("Please input your guess.");
+		let mut guess = String::new();
 
-    io::stdin()  // returns an instance of std::io::Stdin
-        .read_line(&mut guess)
-        .expect("Failed to read line");
+		io::stdin()  // returns an instance of std::io::Stdin
+			.read_line(&mut guess)
+			.expect("Failed to read line");
 
+		// u32 tells parse to convert guess to u32
+		let guess: u32 = match guess.trim().parse() {
+			Ok(num) => num,
+			Err(_) => continue,
+		};
+		println!("You guessed: {guess}.");
 
-    println!("You guessed: {guess}.");
-    // pin - https://rust-book.cs.brown.edu/ch02-00-guessing-game-tutorial.html#generating-a-secret-number
+		match guess.cmp(&secret_number) {
+			Ordering::Less => println!("Too small!"),
+			Ordering::Greater => println!("Too big!"),
+			Ordering::Equal => {
+			    println!("You win!");
+			    break;
+			}
+		}
+	}
 }
