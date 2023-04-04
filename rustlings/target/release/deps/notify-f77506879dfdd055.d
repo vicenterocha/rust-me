@@ -1,0 +1,12 @@
+/Users/vicente/Documents/repos/rust-me/rustlings/target/release/deps/notify-f77506879dfdd055.rmeta: /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/lib.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/fsevent.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/null.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/poll.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/debounce/mod.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/debounce/timer.rs
+
+/Users/vicente/Documents/repos/rust-me/rustlings/target/release/deps/libnotify-f77506879dfdd055.rlib: /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/lib.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/fsevent.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/null.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/poll.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/debounce/mod.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/debounce/timer.rs
+
+/Users/vicente/Documents/repos/rust-me/rustlings/target/release/deps/notify-f77506879dfdd055.d: /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/lib.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/fsevent.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/null.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/poll.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/debounce/mod.rs /Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/debounce/timer.rs
+
+/Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/lib.rs:
+/Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/fsevent.rs:
+/Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/null.rs:
+/Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/poll.rs:
+/Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/debounce/mod.rs:
+/Users/vicente/.cargo/registry/src/github.com-1ecc6299db9ec823/notify-4.0.17/src/debounce/timer.rs:
