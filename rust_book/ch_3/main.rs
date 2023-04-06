@@ -5,6 +5,7 @@ fn main() {
 	// shadowing
     let x = x + 1;
     println!("{:p}", &x);  // different address, therefore different variable
+    this_is(1, 2);
 
     {
         // temporary shadowing - when the scope is over, x returns to 6
@@ -14,6 +15,6 @@ fn main() {
     }
 
     println!("The value of x is: {x}");
-
     // Bookmark https://rust-book.cs.brown.edu/ch03-02-data-types.html#floating-point-types
 }
+
