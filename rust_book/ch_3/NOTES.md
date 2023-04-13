@@ -1,6 +1,6 @@
-# Scalar Types
+# 1. Scalar Types
 
-## 1. Integers
+## 1.1. Integers
 
 An integer is a number without a fractional component
 
@@ -18,16 +18,34 @@ The primary situation in which one could use *isize* or *usize* is when indexing
 
 A note on **integer overflow**:
 
-* When compiling in *debug mode*, Rust includes checks for integer workflow that causes the program to *panic* at runtime if this behaviour occurs.
-* But, when compiling in *release mode*, Rust won't include such checks and values will *wrap around* in case of overflow. Example, for u8 the value 256 becomes 0, 257 becomes 1, etc.
+* When compiling in *debug mode*, Rust includes checks for integer workflow 
+    that causes the program to *panic* at runtime if this behaviour occurs.
+* But, when compiling in *release mode*, Rust won't include such checks and
+    values will *wrap around* in case of overflow. Example, for u8 the value
+    256 becomes 0, 257 becomes 1, etc.
 
-## 2. Floating-point Numbers
+## 1.2. Floating-point Numbers
 
-https://rust-book.cs.brown.edu/ch03-02-data-types.html#floating-point-types
+Rust’s floating-point types are f32 and f64, which are 32 bits and 64 bits 
+in size, respectively.
 
-## 3. Booleans
+Integer division rounds down to the nearest integer.
 
-## 4. Characters
+## 1.3. Booleans
 
-# Compound Types
+*true* and *false*.
+
+## 1.4. Characters
+
+Four bytes in size and represents Unicode Scalar Value.
+
+```Rust
+fn main() {
+    let c = 'z';
+    let z: char = 'ℤ'; // with explicit type annotation
+    let heart_eyed_cat = '😻';
+}
+```
+
+# 2. Compound Types
 
