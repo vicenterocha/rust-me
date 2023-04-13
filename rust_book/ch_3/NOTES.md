@@ -49,3 +49,30 @@ fn main() {
 
 # 2. Compound Types
 
+## 2.1 Tuple
+
+Tuples have a fixed length.
+Tuples can contain multiple data types at once.
+
+```
+fn main() {
+    let tup: (i32, f64, u8) = (500, 6.4, 1);
+
+    let five_hundred = x.0;
+}
+```
+
+## 2.2 Array
+
+Unlike a tuple, every element of an array must have the same type.
+Arrays have fixed length.
+Data allocated on the stack rather than the heapd (to be learned later).
+
+```
+fn main() {
+    let a = [1, 2, 3, 4, 5];
+    let b: [i32; 5] = [1, 2, 3, 4, 5];
+    
+    let first = a[0];
+}
+```
