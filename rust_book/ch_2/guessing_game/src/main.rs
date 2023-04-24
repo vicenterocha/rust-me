@@ -1,5 +1,5 @@
 use rand::{Rng, random}; // Rng is a trait that defines methods that random number generators implement
-use std::{cmp::Ordering, io};
+use std::{cmp::Ordering};
 
 
 fn main() {

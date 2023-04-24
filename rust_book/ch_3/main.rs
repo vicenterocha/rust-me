@@ -1,6 +1,6 @@
 fn main() {
     let x = 5;
-    println!("{:p}", &x);
+    println("{:p}", &x);
 
     // shadowing
     let x = x + 1;
