@@ -44,8 +44,8 @@ let boxed: Box<u8> = Box::new(5);
 let val: u8 = *boxed;
 ```
 
-
-HERE https://rust-book.cs.brown.edu/ch04-01-what-is-ownership.html#rust-does-not-permit-manual-memory-management
+* **Box deallocation principle**:
+    * If a variable owns a box, when Rust deallocates the variable's frame, then Rust deallocates the box's heap memory.
 
 ## Slices
 
