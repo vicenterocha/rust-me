@@ -47,15 +47,50 @@ let val: u8 = *boxed;
 * **Box deallocation principle**:
     * If a variable owns a box, when Rust deallocates the variable's frame, then Rust deallocates the box's heap memory.
 
-## Slices
+* Owned data can only be accessed through the owner — no aliases
 
-* Slices are a way to borrow a portion of a collection, such as an array or a vector.
-* Slices do not have ownership and can be passed around as references.
 
-## Summary
+## Fixing Ownership Errors
 
-* Ownership is a key feature of Rust for managing memory.
-* Rust enforces rules at compile time to ensure memory safety.
-* Ownership can be transferred through function calls.
-* Borrowing allows a function to borrow a reference to a variable without taking ownership.
-* Slices are a way to borrow a portion of a collection without taking ownership.
+### Fixing an Unsafe Program: Returning a Reference to the Stack
+
+```rust
+fn return_a_string() -> &String {
+    let s = String::from("Hello world");
+    &s
+}
+```
+
+we are trying to return a reference to whose lifetime ends with the function
+
+1. one solution could be to return the string, not a pointer
+
+```rust
+fn return_a_string() -> String {
+    let s = String::from("Hello world");
+    s
+}
+```
+
+2. another could be to return a static string, if it really is static
+
+```rust
+fn return_a_string() -> &'static str {
+    "Hello world"    
+}
+```
+
+3. Another one, completely new to me, is to use a reference-counted pointer
+
+```rust
+use std::rc::Rc;
+fn return_a_string() -> Rc<String> {
+    let s = Rc::new(String::from("Hello world"));
+    Rc::clone(&s)
+}
+```
+
+which makes use of a garbage collection process to manage the lifetime of the
+object. It will only copy the pointer to the data, not the data itself.
+In runtime the `Rc` will check the when the last `Rc` pointing to data has been
+dropped, then deallocates the memory.

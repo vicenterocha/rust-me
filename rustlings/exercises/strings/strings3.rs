@@ -1,21 +1,26 @@
 // strings3.rs
 // Execute `rustlings hint strings3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 fn trim_me(input: &str) -> String {
     // TODO: Remove whitespace from both ends of a string!
-    ???
+    String::from(input.trim())
+    // input.chars().filter(|c| !c.is_whitespace()).collect() // opt to remove all spaces
+
 }
 
 fn compose_me(input: &str) -> String {
     // TODO: Add " world!" to the string! There's multiple ways to do this!
-    ???
+    // input.to_owned() + " world!"  // opt a -> generally faster as it just
+    // allocates a buffer and copies data into it
+    // input.to_string() + " world!"  // opt b -> generally worst option
+    // as it returns the string representation of the object for classes
+    // that implement the ToString trait. Involves more operations
+    format!("{} {}", input.to_owned(), "world!")  // opt b
 }
 
 fn replace_me(input: &str) -> String {
     // TODO: Replace "cars" in the string with "balloons"!
-    ???
+    input.replace("cars", "balloons")
 }
 
 #[cfg(test)]
