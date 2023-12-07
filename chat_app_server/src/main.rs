@@ -1,5 +1,7 @@
-#[macro_use] extern crate rocket;
+#[macro_use]
+extern crate rocket;
 use dashmap::DashMap;
+use rocket::futures::{SinkExt, StreamExt};
 use rocket::State;
 use rocket::{Build, Rocket};
 
@@ -14,12 +16,38 @@ fn user_messages(username: &str, user_messages: &UserMessages) -> String {
     }
 }
 
-// Your Rocket handler
 #[post("/update_data")]
 fn update_data(user_messages: &UserMessages) {
     // Update the DashMap without acquiring a lock
-    let a = "Here is a sentence.Here is another one".split(".").map(String::from).collect();
+    let a = "Here is a sentence.Here is another one"
+        .split(".")
+        .map(String::from)
+        .collect();
     user_messages.insert("gary".to_string(), a);
+}
+
+#[get("/hello/<name>")]
+fn hello(ws: ws::WebSocket, name: &str) -> ws::Channel<'_> {
+    ws.channel(move |mut stream| {
+        Box::pin(async move {
+            let message = format!("Hello, {}!", name);
+            let _ = stream.send(message.into()).await;
+            Ok(())
+        })
+    })
+}
+
+#[get("/echo")]
+fn echo(ws: ws::WebSocket) -> ws::Channel<'static> {
+    ws.channel(move |mut stream| {
+        Box::pin(async move {
+            while let Some(message) = stream.next().await {
+                let _ = stream.send(message?).await;
+            }
+
+            Ok(())
+        })
+    })
 }
 
 #[launch]
@@ -31,12 +59,11 @@ fn rocket() -> Rocket<Build> {
         .manage(initial_data)
 }
 
-
 #[cfg(test)]
 mod test {
     use super::rocket;
-    use rocket::local::blocking::Client;
     use rocket::http::Status;
+    use rocket::local::blocking::Client;
 
     #[test]
     fn user_messages_should_return_not_found_response_when_no_messages() {
@@ -45,11 +72,16 @@ mod test {
 
         // When
         let username = "nonexistent_user";
-        let response = client.get(format!("/user_messages/{}", username)).dispatch();
+        let response = client
+            .get(format!("/user_messages/{}", username))
+            .dispatch();
 
         // Then
         assert_eq!(response.status(), Status::Ok);
-        assert_eq!(response.into_string().unwrap(), "Username nonexistent_user not found");
+        assert_eq!(
+            response.into_string().unwrap(),
+            "Username nonexistent_user not found"
+        );
     }
 
     #[test]
@@ -60,10 +92,16 @@ mod test {
 
         // When
         let username = "gary";
-        let response = client.get(format!("/user_messages/{}", username)).dispatch();
+        let response = client
+            .get(format!("/user_messages/{}", username))
+            .dispatch();
 
         // Then
         assert_eq!(response.status(), Status::Ok);
-        assert_eq!(response.into_string().unwrap(), "Here is a sentence; Here is another one");
+        assert_eq!(
+            response.into_string().unwrap(),
+            "Here is a sentence; Here is another one"
+        );
     }
 }
+

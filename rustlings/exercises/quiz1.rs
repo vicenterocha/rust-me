@@ -15,7 +15,7 @@
 fn calculate_price_of_apples(number_of_apples: i32) -> i32 {
     let apple_cost = 2;
     if number_of_apples > 40 {
-        return number_of_apples;
+        return number_of_apples * apple_cost / 2;
     } else {
         return number_of_apples * apple_cost;
     }
