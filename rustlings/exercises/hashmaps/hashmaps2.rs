@@ -10,6 +10,7 @@
 // Make me pass the tests!
 //
 // Execute `rustlings hint hashmaps2` or use the `hint` watch subcommand for a hint.
+//
 
 
 use std::collections::HashMap;

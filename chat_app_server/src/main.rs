@@ -4,8 +4,17 @@ use dashmap::DashMap;
 use rocket::futures::{SinkExt, StreamExt};
 use rocket::State;
 use rocket::{Build, Rocket};
+use rocket::serde::{Deserialize, json::Json};
+
 
 type UserMessages = State<DashMap<String, Vec<String>>>;
+
+#[derive(Deserialize)]
+#[serde(crate = "rocket::serde")]
+struct Message<'r> {
+    body: &'r str,
+}
+
 
 #[get("/user_messages/<username>")]
 fn user_messages(username: &str, user_messages: &UserMessages) -> String {
@@ -16,14 +25,10 @@ fn user_messages(username: &str, user_messages: &UserMessages) -> String {
     }
 }
 
-#[post("/update_data")]
-fn update_data(user_messages: &UserMessages) {
-    // Update the DashMap without acquiring a lock
-    let a = "Here is a sentence.Here is another one"
-        .split(".")
-        .map(String::from)
-        .collect();
-    user_messages.insert("gary".to_string(), a);
+#[post("/update_data/<username>", data = "<message>")]
+fn update_data(username: &str, message: Json<Message<'_>>, user_messages: &UserMessages) {
+    // TODO: for now this is always creating a new list - support append to list of messages
+    user_messages.insert(username.to_string(), vec![message.body.to_string()]);
 }
 
 #[get("/hello/<name>")]
@@ -64,6 +69,7 @@ mod test {
     use super::rocket;
     use rocket::http::Status;
     use rocket::local::blocking::Client;
+    use rocket::http::ContentType;
 
     #[test]
     fn user_messages_should_return_not_found_response_when_no_messages() {
@@ -85,23 +91,37 @@ mod test {
     }
 
     #[test]
-    fn user_messages_should_return_user_messages_when_messages_exist() {
+    fn user_messages_should_return_allow_to_add_messages_to_a_username() {
         // Given
         let client = Client::tracked(rocket()).expect("valid rocket instance");
-        client.post("/update_data").dispatch();
+        let username = "quinn";
 
-        // When
-        let username = "gary";
+        // pre-when-assert to make sure username has no messages
         let response = client
             .get(format!("/user_messages/{}", username))
             .dispatch();
-
-        // Then
-        assert_eq!(response.status(), Status::Ok);
         assert_eq!(
             response.into_string().unwrap(),
-            "Here is a sentence; Here is another one"
+            format!("Username {} not found", username)
         );
-    }
-}
 
+        // When
+        let response = client
+            .post(format!("/update_data/{}", username))
+            .header(ContentType::JSON)
+            .body(
+                r##"{
+                    "body": "Everybody hates KVN"
+                }"##,
+            )
+            .dispatch();
+
+        // Then
+        let response = client
+            .get(format!("/user_messages/{}", username))
+            .dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        assert_eq!(response.into_string().unwrap(), "Everybody hates KVN");
+    }
+
+}
